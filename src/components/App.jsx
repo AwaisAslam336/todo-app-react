@@ -12,6 +12,7 @@ function App() {
     setItems((preValue)=>{
       return [...preValue,newItem]
     });
+    setNewItem("");
   }
   function itemValue(event){
     const value = event.target.value;
@@ -31,7 +32,7 @@ function App() {
       </div>
       <div>
         <ul>
-          {getItems.map(show)}
+          {getItems.map((item,index)=> (<li key={index}>{item}</li>))}
         </ul>
       </div>
     </div>
