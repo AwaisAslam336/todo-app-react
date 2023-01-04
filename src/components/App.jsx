@@ -1,12 +1,18 @@
 import React from "react";
 import { useState } from "react";
+import TodoItem from "./TodoItem";
 
 function App() {
   const [newItem, setNewItem] = useState("");
   const [getItems, setItems] = useState([]);
 
-  function show(item,index){
-    return (<li key={index}>{item}</li>);
+  function deletItem(index){
+    setItems((preValue)=>{
+      return preValue.filter((value,ind)=>{
+        return ind !== index;
+      })
+    
+    })
   }
   function submited(){
     setItems((preValue)=>{
@@ -32,7 +38,9 @@ function App() {
       </div>
       <div>
         <ul>
-          {getItems.map((item,index)=> (<li key={index}>{item}</li>))}
+          {getItems.map((item,index)=> {
+            return (<TodoItem key={index} onCheckeddd={deletItem} index={index} item={item} />);
+            })}
         </ul>
       </div>
     </div>
