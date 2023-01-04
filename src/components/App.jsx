@@ -1,28 +1,27 @@
 import React from "react";
 import { useState } from "react";
+import InputArea from "./InputArea";
 import TodoItem from "./TodoItem";
 
 function App() {
-  const [newItem, setNewItem] = useState("");
+  //store array of items/tasks list
   const [getItems, setItems] = useState([]);
 
-  function deletItem(index){
-    setItems((preValue)=>{
-      return preValue.filter((value,ind)=>{
+  function deletItem(index) {
+    setItems((preValue) => {
+      //return all items whom index is not equal to given index
+      //means: delete/exclude item at given index
+      return preValue.filter((value, ind) => {
         return ind !== index;
-      })
-    
-    })
-  }
-  function submited(){
-    setItems((preValue)=>{
-      return [...preValue,newItem]
+      });
     });
-    setNewItem("");
   }
-  function itemValue(event){
-    const value = event.target.value;
-    setNewItem(value);
+  function submited(newItem) {
+    setItems((preValue) => {
+      //return all previous items list + new item
+      //means: add new given item in items array
+      return [...preValue, newItem];
+    });
   }
 
   return (
@@ -30,17 +29,23 @@ function App() {
       <div className="heading">
         <h1>To-Do List</h1>
       </div>
-      <div className="form">
-        <input type="text" onChange={itemValue} value={newItem} />
-        <button onClick={submited}>
-          <span>Add</span>
-        </button>
-      </div>
+      {/* call submited function when onAdd function get called in child component */}
+      <InputArea onAdd={submited} />
       <div>
         <ul>
-          {getItems.map((item,index)=> {
-            return (<TodoItem key={index} onCheckeddd={deletItem} index={index} item={item} />);
-            })}
+          {
+            //render all items 1 by 1 in ul->li
+            getItems.map((item, index) => {
+              return (
+                <TodoItem
+                  key={index}
+                  onCheckeddd={deletItem}
+                  index={index}
+                  item={item}
+                />
+              );
+            })
+          }
         </ul>
       </div>
     </div>
